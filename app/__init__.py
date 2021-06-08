@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask #type:ignore
 
 def create_app(test_config=None):
   #set up app config
@@ -11,5 +11,5 @@ def create_app(test_config=None):
   @app.route('/hello')
   def hello():
     return 'Hello, World!'
-    
+
   return app
