@@ -1,6 +1,6 @@
 from datetime import datetime
 from app.db import Base
-from aqlalchemy import Column, Integer, String, ForeignKey, DateTime #type:ignore
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime #type:ignore
 from sqlalchemy.orm import relationship #type:ignore
 
 class Post(Base):
