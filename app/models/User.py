@@ -11,6 +11,12 @@ class User(Base):
 
   @validates('email')
   def validate_email(self, key, email):
-    #make sure email address contains @ character
+    #Make sure email address contains @ character
     assert '@' in email
     return email
+
+  @validates('password')
+  def validate_password(self, key, password):
+    #Make sure the password length is greater than 4
+    assert len(password) > 4
+    return password
