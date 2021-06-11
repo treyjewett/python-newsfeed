@@ -1,4 +1,4 @@
-from app.models import User, Post, Comment
+from app.models import User, Post, Comment, Vote
 from app.db import Session, Base, engine
 
 #drop and rebruild tables
@@ -40,7 +40,19 @@ db.add_all([
   Comment(comment_text='In hac habitasse platea dictumst.', user_id=3, post_id=3)
 ])
 
-#Commit the comments witht the user id's to the database.
+#commit the comments witht the user id's to the database.
+db.commit()
+
+# insert votes
+db.add_all([
+  Vote(user_id=1, post_id=2),
+  Vote(user_id=1, post_id=4),
+  Vote(user_id=2, post_id=4),
+  Vote(user_id=3, post_id=4),
+  Vote(user_id=4, post_id=2)
+])
+
+#commit the votes to the relevant posts
 db.commit()
 
 #close the session
