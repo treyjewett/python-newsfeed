@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, session #type:ignore
 from app.models import User, Post, Comment, Vote
 from app.db import get_db
 import sys
+from app.utils.auth import login_required
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -66,6 +67,7 @@ def logout():
 
 #Comment Route
 @bp.route('/comments', methods=['POST'])
+@login_required
 def comment():
   data = request.get_json()
   db = get_db()
@@ -89,6 +91,7 @@ def comment():
 
 #Upvote Route
 @bp.route('/posts/upvote', methods=['PUT'])
+@login_required
 def upvote():
   data = request.get_json()
   db = get_db()
@@ -111,6 +114,7 @@ def upvote():
 
 #Create Route
 @bp.route('/posts', methods=['POST'])
+@login_required
 def create():
   data = request.get_json()
   db = get_db()
@@ -134,8 +138,9 @@ def create():
 
 #Update Post Route
 @bp.route('/posts/<id>', methods=['PUT'])
+@login_required
 def update(id):
-  data = request.get_jason()
+  data = request.get_json()
   db = get_db()
 
   try:
@@ -152,6 +157,7 @@ def update(id):
 
 #Delete Route
 @bp.route('/posts/<id>', methods=['DELETE'])
+@login_required
 def delete(id):
   db = get_db()
 
@@ -160,7 +166,7 @@ def delete(id):
     db.delete(db.query(Post).filter(Post.id == id).one())
     db.commit()
   except:
-    print(sys.exc_info()[0])
+    print('Delete Error', sys.exc_info()[0])
     db.rollback()
     return jsonify(message = 'Post not found'), 404
   
